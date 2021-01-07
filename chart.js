@@ -4,10 +4,10 @@ d3.json(url, function (error, json) {
     console.log(json)
 
     // height and width of svg
-    const h = 400
-    const w = 700
-    const pX = 30
-    const pY = 50
+    const h = 500
+    const w = 800
+    const pX = 50
+    const pY = 70
 
     // find min and max x data for scale domain
     const yearData = json.map(d => d['Year'])
@@ -35,10 +35,6 @@ d3.json(url, function (error, json) {
         .domain([minTime, maxTime])
         .range([h - pY, pY])
 
-    // let testDate = new Date(2000, 0, 1, 0, 32, 50)
-    // console.log(testDate)
-    // console.log(yScale(testDate))
-
     // create svg
     let svg = d3.select('body')
         .append('svg')
@@ -62,5 +58,12 @@ d3.json(url, function (error, json) {
         .attr('cx', (d) => xScale(d['Year']))
         .attr('cy', (d, i) => yScale(timeData[i]))
 
+    // add the x axis
+    let xAxis = d3.axisBottom().scale(xScale).tickFormat(d3.format('.4r'))
+
+    svg.append('g')
+        .attr('id', 'x-axis')
+        .attr('transform', `translate(0,${h - pY / 2})`)
+        .call(xAxis)
 });
 
