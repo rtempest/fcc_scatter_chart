@@ -7,6 +7,15 @@ d3.json(url, function (error, json) {
     h = 400
     w = 700
 
+    // create x scale
+    const yearData = json.map(d => d['Year'])
+    const minX = d3.min(yearData)
+    const maxX = d3.max(yearData)
+    // console.log(maxX)
+    const xScale = d3.linearScale()
+        .domain(minX, maxX)
+        .range(0, w)
+
     // create svg
     let svg = d3.select('body')
         .append('svg')
