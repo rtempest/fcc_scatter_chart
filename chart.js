@@ -11,10 +11,10 @@ d3.json(url, function (error, json) {
     const yearData = json.map(d => d['Year'])
     const minX = d3.min(yearData)
     const maxX = d3.max(yearData)
-    // console.log(maxX)
-    const xScale = d3.linearScale()
-        .domain(minX, maxX)
-        .range(0, w)
+
+    const xScale = d3.scaleLinear()
+        .domain([minX, maxX])
+        .range([30, w])
 
     // create svg
     let svg = d3.select('body')
@@ -36,7 +36,7 @@ d3.json(url, function (error, json) {
         .enter()
         .append('circle')
         .attr('r', 3)
-        .attr('cx', (d) => 200)
+        .attr('cx', (d) => xScale(d['Year']))
         .attr('cy', 200)
 
 });
