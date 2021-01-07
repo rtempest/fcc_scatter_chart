@@ -13,14 +13,22 @@ d3.json(url, function (error, json) {
         .attr('height', h)
         .attr('width', w)
 
-    let title = svg.append('text')
+    // add a title
+    svg.append('text')
         .attr('x', w / 2)
         .attr('y', 30)
         .attr('text-anchor', 'middle')
         .attr('id', 'title')
         .text('Doping Allegations in Professional Cycling')
 
-
+    // add circles
+    svg.selectAll('circle')
+        .data(json)
+        .enter()
+        .append('circle')
+        .attr('r', 3)
+        .attr('cx', (d) => 200)
+        .attr('cy', 200)
 
 });
 
