@@ -7,14 +7,35 @@ d3.json(url, function (error, json) {
     h = 400
     w = 700
 
-    // create x scale
+    // find min and max x data for scale domain
     const yearData = json.map(d => d['Year'])
     const minX = d3.min(yearData)
     const maxX = d3.max(yearData)
 
+    // create x scale
     const xScale = d3.scaleLinear()
         .domain([minX, maxX])
         .range([30, w])
+
+    //  create array of time data
+    const timeData = json.map(d => {
+        // create date object from mm:ss string
+        time = d.Time.split(':')
+        return new Date(2000, 0, 1, 0, time[0], time[1])
+    })
+    // find min and max time for y scale domain
+    const minTime = d3.min(timeData)
+    const maxTime = d3.max(timeData)
+    console.log(minTime)
+
+    // create y scale
+    const yScale = d3.scaleTime()
+        .domain([minTime, maxTime])
+        .range([h, 0])
+
+    // let testDate = new Date(2000, 0, 1, 0, 32, 50)
+    // console.log(testDate)
+    // console.log(yScale(testDate))
 
     // create svg
     let svg = d3.select('body')
@@ -37,7 +58,7 @@ d3.json(url, function (error, json) {
         .append('circle')
         .attr('r', 3)
         .attr('cx', (d) => xScale(d['Year']))
-        .attr('cy', 200)
+        .attr('cy', (d, i) => yScale(timeData[i]))
 
 });
 
