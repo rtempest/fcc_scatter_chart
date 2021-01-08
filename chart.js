@@ -6,8 +6,8 @@ d3.json(url, function (error, json) {
     // height and width of svg
     const h = 500
     const w = 800
-    const pX = 60
-    const pY = 50
+    const pX = 80
+    const pY = 70
 
     // find min and max x data for scale domain
     const yearData = json.map(d => d['Year'])
@@ -108,6 +108,8 @@ d3.json(url, function (error, json) {
         .attr('x', legendSide)
         .attr('y', legendTop)
         .style('fill', 'white')
+        .style('stroke', 'black')
+        .style('stroke-width', '0.5')
 
     // doping circle
     svg.append('circle')
@@ -115,6 +117,12 @@ d3.json(url, function (error, json) {
         .attr('cx', legendSide + 10)
         .attr('cy', legendTop + 20)
         .style('fill', 'red')
+
+    // doping label
+    svg.append('text')
+        .attr('x', legendSide + 25)
+        .attr('y', legendTop + 23)
+        .text('doping')
 
     // non-doping circle
     svg.append('circle')

@@ -6,7 +6,9 @@ body {
 }
 
 svg {
-    background-color: antiquewhite;
+    background-color: white;
+    box-shadow: 5px 10px 40px grey;
+    margin-top: 10%;
 }
 
 #title {
@@ -20,7 +22,6 @@ svg {
 #legend {
     top: 40px;
     left: 40px;
-    background-color: white;
     width: 20px;
     height: 20px;
 }
