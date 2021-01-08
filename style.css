@@ -7,3 +7,7 @@ body {
 svg {
     background-color: antiquewhite;
 }
+
+.doping {
+    fill: 'red'
+}

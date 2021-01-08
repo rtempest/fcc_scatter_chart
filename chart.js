@@ -59,6 +59,7 @@ d3.json(url, function (error, json) {
         .attr('r', 3)
         .attr('cx', (d) => xScale(d['Year']))
         .attr('cy', (d, i) => yScale(timeData[i]))
+        .style('fill', (c) => c.Doping ? 'red' : 'blue')
 
     // add the x axis
     let xAxis = d3.axisBottom().scale(xScale).tickFormat(d3.format('.4r'))
