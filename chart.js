@@ -73,6 +73,7 @@ d3.json(url, function (error, json) {
     svg.append('text')
         .attr('x', w / 2)
         .attr('y', h - pX / 5)
+        .attr('class', 'label')
         .text('Year')
 
     // add the y axis
@@ -87,8 +88,8 @@ d3.json(url, function (error, json) {
     svg.append('text')
         .attr('x', 0 - h / 2)
         .attr('y', pY / 3)
+        .attr('class', 'label')
         .attr('transform', 'rotate(-90)')
         .text('Time')
-
 });
 

@@ -2,9 +2,17 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-family: monospace;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 svg {
     background-color: antiquewhite;
+}
+
+#title {
+    font-size: 18pt;
+}
+
+.label {
+    font-size: 9pt;
 }
