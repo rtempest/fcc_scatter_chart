@@ -56,7 +56,8 @@ d3.json(url, function (error, json) {
         .data(json)
         .enter()
         .append('circle')
-        .attr('r', 3)
+        .attr('class', 'dot')
+        .attr('r', 4)
         .attr('cx', (d) => xScale(d['Year']))
         .attr('cy', (d, i) => yScale(timeData[i]))
         .style('fill', (c) => c.Doping ? 'red' : 'blue')
@@ -85,11 +86,42 @@ d3.json(url, function (error, json) {
         .call(yAxis)
 
     // add the y axis label
+
+
     svg.append('text')
         .attr('x', 0 - h / 2)
         .attr('y', pY / 3)
         .attr('class', 'label')
         .attr('transform', 'rotate(-90)')
         .text('Time')
+
+    // add legend
+    // var legend = d3.select('body')
+
+    const legendTop = h - (h / 3 * 2)
+    const legendSide = w - pX * 3
+
+    svg.append('rect')
+        .attr('id', 'legend')
+        .style('width', 100)
+        .style('height', 60)
+        .attr('x', legendSide)
+        .attr('y', legendTop)
+        .style('fill', 'white')
+
+    // doping circle
+    svg.append('circle')
+        .attr('r', 4)
+        .attr('cx', legendSide + 10)
+        .attr('cy', legendTop + 20)
+        .style('fill', 'red')
+
+    // non-doping circle
+    svg.append('circle')
+        .attr('r', 4)
+        .attr('cx', legendSide + 10)
+        .attr('cy', legendTop + 40)
+        .style('fill', 'blue')
+
 });
 

@@ -16,3 +16,11 @@ svg {
 .label {
     font-size: 9pt;
 }
+
+#legend {
+    top: 40px;
+    left: 40px;
+    background-color: white;
+    width: 20px;
+    height: 20px;
+}
