@@ -2,12 +2,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: monospace;
 }
 
 svg {
     background-color: antiquewhite;
-}
-
-.doping {
-    fill: 'red'
 }

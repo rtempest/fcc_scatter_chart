@@ -69,6 +69,12 @@ d3.json(url, function (error, json) {
         .attr('transform', `translate(0,${h - pY})`)
         .call(xAxis)
 
+    // add the x axis label
+    svg.append('text')
+        .attr('x', w / 2)
+        .attr('y', h - pX / 5)
+        .text('Year')
+
     // add the y axis
     let yAxis = d3.axisLeft().scale(yScale).tickFormat(d3.timeFormat('%M:%S'))
 
@@ -76,5 +82,13 @@ d3.json(url, function (error, json) {
         .attr('id', 'y-axis')
         .attr('transform', `translate(${pX},0)`)
         .call(yAxis)
+
+    // add the y axis label
+    svg.append('text')
+        .attr('x', 0 - h / 2)
+        .attr('y', pY / 3)
+        .attr('transform', 'rotate(-90)')
+        .text('Time')
+
 });
 
