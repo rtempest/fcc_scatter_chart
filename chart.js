@@ -1,7 +1,6 @@
 const url = 'https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/cyclist-data.json'
 
 d3.json(url, function (error, json) {
-    console.log(json)
 
     // height and width of svg
     const h = 500
@@ -11,7 +10,7 @@ d3.json(url, function (error, json) {
 
     // find min and max x data for scale domain
     const yearData = json.map(d => d['Year'])
-    const minX = d3.min(yearData) - 1
+    const minX = d3.min(yearData)
     const maxX = d3.max(yearData)
 
     // create x scale
@@ -24,7 +23,6 @@ d3.json(url, function (error, json) {
     const timeData = json.map(d => {
         // create date object from mm:ss string
         time = d.Time.split(':')
-        console.log(time[0])
         return new Date(2000, 0, 1, 0, time[0], time[1])
     })
     // find min and max time for y scale domain
@@ -52,15 +50,18 @@ d3.json(url, function (error, json) {
         .text('Doping Allegations in Professional Cycling')
 
     // add circles
-    svg.selectAll('circle')
+    const circle = svg.selectAll('circle')
         .data(json)
         .enter()
         .append('circle')
         .attr('class', 'dot')
+        .attr('data-xvalue', (d, i) => yearData[i])
+        .attr('data-yvalue', (d, i) => timeData[i])
         .attr('r', 4)
         .attr('cx', (d) => xScale(d['Year']))
         .attr('cy', (d, i) => yScale(timeData[i]))
         .style('fill', (c) => c.Doping ? 'red' : 'blue')
+
 
     // add the x axis
     let xAxis = d3.axisBottom().scale(xScale).tickFormat(d3.format('.4r'))
@@ -86,8 +87,6 @@ d3.json(url, function (error, json) {
         .call(yAxis)
 
     // add the y axis label
-
-
     svg.append('text')
         .attr('x', 0 - h / 2)
         .attr('y', pY / 3)
@@ -100,36 +99,67 @@ d3.json(url, function (error, json) {
 
     const legendTop = h - (h / 3 * 2)
     const legendSide = w - pX * 3
+    const legendWidth = 100;
+    const legendHeight = 60;
 
     svg.append('rect')
         .attr('id', 'legend')
-        .style('width', 100)
-        .style('height', 60)
+        .style('width', legendWidth)
+        .style('height', legendHeight)
         .attr('x', legendSide)
         .attr('y', legendTop)
         .style('fill', 'white')
         .style('stroke', 'black')
         .style('stroke-width', '0.5')
 
-    // doping circle
+    // legend doping circle
     svg.append('circle')
         .attr('r', 4)
         .attr('cx', legendSide + 10)
         .attr('cy', legendTop + 20)
         .style('fill', 'red')
 
-    // doping label
+    // legend doping label
     svg.append('text')
         .attr('x', legendSide + 25)
-        .attr('y', legendTop + 23)
+        .attr('y', legendTop + 25)
         .text('doping')
 
-    // non-doping circle
+    // legend non-doping circle
     svg.append('circle')
         .attr('r', 4)
         .attr('cx', legendSide + 10)
         .attr('cy', legendTop + 40)
         .style('fill', 'blue')
+
+    // legend non-doping label
+    svg.append('text')
+        .attr('x', legendSide + 25)
+        .attr('y', legendTop + 45)
+        .text('non-doping')
+
+    // create tooltip
+    const tooltip = d3.select('body')
+        .append('div')
+        .attr('id', 'tooltip')
+
+    // add a hover function
+    circle
+        .on('mouseover', (event) => {
+            place = event['Place']
+            thisCircle = json.filter((x) => x['Place'] === place)[0]
+            const name = thisCircle['Name']
+            const doping = thisCircle['Doping']
+            const time = thisCircle['Time']
+            const dopingStr = () => doping ? `<p>Doping Allegations:${doping}` : '';
+
+            d3.select('#tooltip')
+                .style('visibility', 'visible')
+                .style('top', '500px')
+                .html(`<p>Cyclist: ${name}</p>${dopingStr()}<p>Time: ${time}</p>`)
+        })
+
+    // add tooltip as a mouseover event
 
 });
 

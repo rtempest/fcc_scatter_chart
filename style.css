@@ -19,9 +19,12 @@ svg {
     font-size: 9pt;
 }
 
-#legend {
-    top: 40px;
-    left: 40px;
-    width: 20px;
-    height: 20px;
+#tooltip {
+    background-color: grey;
+    position: absolute;
+    visibility: hidden;
+}
+
+.dot:hover {
+    fill: black;
 }
