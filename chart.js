@@ -6,34 +6,36 @@ d3.json(url, function (error, json) {
     // height and width of svg
     const h = 500
     const w = 800
-    const pX = 50
-    const pY = 70
+    const pX = 60
+    const pY = 50
 
     // find min and max x data for scale domain
     const yearData = json.map(d => d['Year'])
-    const minX = d3.min(yearData)
+    const minX = d3.min(yearData) - 1
     const maxX = d3.max(yearData)
 
     // create x scale
     const xScale = d3.scaleLinear()
         .domain([minX, maxX])
         .range([pX, w - pX])
+        .nice();
 
     //  create array of time data
     const timeData = json.map(d => {
         // create date object from mm:ss string
         time = d.Time.split(':')
+        console.log(time[0])
         return new Date(2000, 0, 1, 0, time[0], time[1])
     })
     // find min and max time for y scale domain
     const minTime = d3.min(timeData)
     const maxTime = d3.max(timeData)
-    console.log(minTime)
 
     // create y scale
     const yScale = d3.scaleTime()
-        .domain([minTime, maxTime])
+        .domain([maxTime, minTime])
         .range([h - pY, pY])
+        .nice();
 
     // create svg
     let svg = d3.select('body')
@@ -63,7 +65,15 @@ d3.json(url, function (error, json) {
 
     svg.append('g')
         .attr('id', 'x-axis')
-        .attr('transform', `translate(0,${h - pY / 2})`)
+        .attr('transform', `translate(0,${h - pY})`)
         .call(xAxis)
+
+    // add the y axis
+    let yAxis = d3.axisLeft().scale(yScale).tickFormat(d3.timeFormat('%M:%S'))
+
+    svg.append('g')
+        .attr('id', 'y-axis')
+        .attr('transform', `translate(${pX},0)`)
+        .call(yAxis)
 });
 
