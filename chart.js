@@ -10,7 +10,7 @@ d3.json(url, function (error, json) {
 
     // find min and max x data for scale domain
     const yearData = json.map(d => d['Year'])
-    const minX = d3.min(yearData)
+    const minX = d3.min(yearData) - 1
     const maxX = d3.max(yearData)
 
     // create x scale
