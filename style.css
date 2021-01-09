@@ -9,6 +9,7 @@ svg {
     background-color: white;
     box-shadow: 5px 10px 40px grey;
     margin-top: 10%;
+    padding-top: 10px;
 }
 
 #title {
@@ -20,13 +21,23 @@ svg {
 }
 
 #tooltip {
-    background-color: #C1D8EC;
     position: absolute;
+    background-color: #C1D8EC;
     border-radius: 5px;
-    /* visibility: hidden; */
-    list-style: none;
+    opacity: 0;
     padding: 5px;
     font-size: 9pt;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+p {
+    padding: 0;
+    margin: 5px 0;
 }
 
 .dot:hover {

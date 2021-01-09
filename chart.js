@@ -44,7 +44,7 @@ d3.json(url, function (error, json) {
     // add a title
     svg.append('text')
         .attr('x', w / 2)
-        .attr('y', 40)
+        .attr('y', 25)
         .attr('text-anchor', 'middle')
         .attr('id', 'title')
         .text('Doping Allegations in Professional Cycling')
@@ -52,7 +52,7 @@ d3.json(url, function (error, json) {
     // add a subtitle
     svg.append('text')
         .attr('x', w / 2)
-        .attr('y', 60)
+        .attr('y', 45)
         .attr('text-anchor', 'middle')
         .attr('id', 'subtitle')
         .style('font-size', '10pt')
@@ -160,12 +160,12 @@ d3.json(url, function (error, json) {
         .on('mouseover', (e) => {
             place = e.Place
             thisCircle = json.filter((x) => x['Place'] === place)[0]
-            const dopingStr = () => e.Doping ? `<li></strong> ${e.Doping}</li>` : '';
+            const dopingStr = () => e.Doping ? `<p></strong> ${e.Doping}</p>` : '';
             tooltip
                 .style('top', d3.event.pageY + 'px')
                 .style('left', d3.event.pageX + 10 + 'px')
                 .attr('data-year', e.Year)
-                .html(`<li><strong>Cyclist:</strong> ${e.Name}</li><li><strong>Time:</strong> ${e.Time}</li><li><strong>Country:</strong> ${e.Nationality}</li>${dopingStr()}`)
+                .html(`<ul><li><strong>Cyclist:</strong> ${e.Name}</li><li><strong>Time:</strong> ${e.Time}</li><li><strong>Country:</strong> ${e.Nationality}</li></ul>${dopingStr()}`)
             tooltip.transition()
                 .duration(200)
                 .style('opacity', 1)
