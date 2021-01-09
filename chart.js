@@ -44,7 +44,7 @@ d3.json(url, function (error, json) {
     // add a title
     svg.append('text')
         .attr('x', w / 2)
-        .attr('y', 30)
+        .attr('y', 40)
         .attr('text-anchor', 'middle')
         .attr('id', 'title')
         .text('Doping Allegations in Professional Cycling')
@@ -76,6 +76,7 @@ d3.json(url, function (error, json) {
         .attr('x', w / 2)
         .attr('y', h - pX / 5)
         .attr('class', 'label')
+        .attr('text-anchor', 'middle')
         .text('Year')
 
     // add the y axis
@@ -91,13 +92,12 @@ d3.json(url, function (error, json) {
         .attr('x', 0 - h / 2)
         .attr('y', pY / 3)
         .attr('class', 'label')
+        .attr('text-anchor', 'middle')
         .attr('transform', 'rotate(-90)')
-        .text('Time')
+        .text("Time up Alpe D'Huez (minutes)")
 
     // add legend
-    // var legend = d3.select('body')
-
-    const legendTop = h - h + 100
+    const legendTop = h - h + 150
     const legendSide = w - pX * 3.5
     const legendWidth = 210;
     const legendHeight = 50;
@@ -145,18 +145,18 @@ d3.json(url, function (error, json) {
         .append('div')
         .attr('id', 'tooltip')
 
+
     // add tooltip as a mouseover event
     circle
-        .on('mouseover', (event) => {
-            place = event['Place']
+        .on('mouseover', (e) => {
+            place = e.Place
             thisCircle = json.filter((x) => x['Place'] === place)[0]
-            const { Name, Doping, Time, Nationality } = thisCircle
-            const dopingStr = () => Doping ? `<li></strong> ${Doping}</li>` : '';
+            const dopingStr = () => e.Doping ? `<li></strong> ${e.Doping}</li>` : '';
             tooltip
-                // .style('opacity', 1)
                 .style('top', d3.event.pageY + 'px')
                 .style('left', d3.event.pageX + 10 + 'px')
-                .html(`<li><strong>Cyclist:</strong> ${Name}</li><li><strong>Time:</strong> ${Time}</li><li><strong>Country:</strong> ${Nationality}</li>${dopingStr()}`)
+                .attr('data-year', e.Year)
+                .html(`<li><strong>Cyclist:</strong> ${e.Name}</li><li><strong>Time:</strong> ${e.Time}</li><li><strong>Country:</strong> ${e.Nationality}</li>${dopingStr()}`)
             tooltip.transition()
                 .duration(200)
                 .style('opacity', 1)
