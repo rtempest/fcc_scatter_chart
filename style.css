@@ -23,8 +23,11 @@ svg {
     background-color: grey;
     position: absolute;
     visibility: hidden;
+    list-style: none;
+    padding: 5px;
+    font-size: 9pt;
 }
 
 .dot:hover {
-    fill: black;
+    r: 8;
 }

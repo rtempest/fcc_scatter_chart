@@ -60,7 +60,7 @@ d3.json(url, function (error, json) {
         .attr('r', 4)
         .attr('cx', (d) => xScale(d['Year']))
         .attr('cy', (d, i) => yScale(timeData[i]))
-        .style('fill', (c) => c.Doping ? 'red' : 'blue')
+        .style('fill', (c) => c.Doping ? '#C14953' : '#4C4C47')
 
 
     // add the x axis
@@ -117,7 +117,7 @@ d3.json(url, function (error, json) {
         .attr('r', 4)
         .attr('cx', legendSide + 10)
         .attr('cy', legendTop + 20)
-        .style('fill', 'red')
+        .style('fill', '#C14953')
 
     // legend doping label
     svg.append('text')
@@ -130,7 +130,7 @@ d3.json(url, function (error, json) {
         .attr('r', 4)
         .attr('cx', legendSide + 10)
         .attr('cy', legendTop + 40)
-        .style('fill', 'blue')
+        .style('fill', '#4C4C47')
 
     // legend non-doping label
     svg.append('text')
@@ -143,23 +143,23 @@ d3.json(url, function (error, json) {
         .append('div')
         .attr('id', 'tooltip')
 
-    // add a hover function
+    // add tooltip as a mouseover event
     circle
         .on('mouseover', (event) => {
             place = event['Place']
             thisCircle = json.filter((x) => x['Place'] === place)[0]
-            const name = thisCircle['Name']
-            const doping = thisCircle['Doping']
-            const time = thisCircle['Time']
-            const dopingStr = () => doping ? `<p>Doping Allegations:${doping}` : '';
-
+            const { Name, Doping, Time, Nationality } = thisCircle
+            const dopingStr = () => Doping ? `<li><strong>Doping Allegations:</strong> ${Doping}</li>` : '';
             d3.select('#tooltip')
                 .style('visibility', 'visible')
                 .style('top', '500px')
-                .html(`<p>Cyclist: ${name}</p>${dopingStr()}<p>Time: ${time}</p>`)
+                .html(`<li><strong>Cyclist:</strong> ${Name}</li><li><strong>Time:</strong> ${Time}</li><li><strong>Country:</strong> ${Nationality}</li>${dopingStr()}`)
         })
+        .on('mouseout', (event) => {
+            d3.select('#tooltip')
+                .style('visibility', 'hidden')
+        });
 
-    // add tooltip as a mouseover event
 
 });
 
