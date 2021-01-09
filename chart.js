@@ -3,8 +3,8 @@ const url = 'https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData
 d3.json(url, function (error, json) {
 
     // height and width of svg
-    const h = 500
-    const w = 800
+    const h = 550
+    const w = 750
     const pX = 80
     const pY = 70
 
