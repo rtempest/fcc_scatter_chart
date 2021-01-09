@@ -3,10 +3,10 @@ const url = 'https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData
 d3.json(url, function (error, json) {
 
     // height and width of svg
-    const h = 550
+    const h = 500
     const w = 750
-    const pX = 80
-    const pY = 70
+    const pX = 70
+    const pY = 60
 
     // find min and max x data for scale domain
     const yearData = json.map(d => d['Year'])
@@ -49,6 +49,15 @@ d3.json(url, function (error, json) {
         .attr('id', 'title')
         .text('Doping Allegations in Professional Cycling')
 
+    // add a subtitle
+    svg.append('text')
+        .attr('x', w / 2)
+        .attr('y', 60)
+        .attr('text-anchor', 'middle')
+        .attr('id', 'subtitle')
+        .style('font-size', '10pt')
+        .text("The top 35 times up Alpe D'Huez")
+
     // add circles
     const circle = svg.selectAll('circle')
         .data(json)
@@ -74,7 +83,7 @@ d3.json(url, function (error, json) {
     // add the x axis label
     svg.append('text')
         .attr('x', w / 2)
-        .attr('y', h - pX / 5)
+        .attr('y', h - pX / 4)
         .attr('class', 'label')
         .attr('text-anchor', 'middle')
         .text('Year')
@@ -94,7 +103,7 @@ d3.json(url, function (error, json) {
         .attr('class', 'label')
         .attr('text-anchor', 'middle')
         .attr('transform', 'rotate(-90)')
-        .text("Time up Alpe D'Huez (minutes)")
+        .text("Time (minutes)")
 
     // add legend
     const legendTop = h - h + 150
