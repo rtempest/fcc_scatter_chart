@@ -20,9 +20,10 @@ svg {
 }
 
 #tooltip {
-    background-color: grey;
+    background-color: #C1D8EC;
     position: absolute;
-    visibility: hidden;
+    border-radius: 5px;
+    /* visibility: hidden; */
     list-style: none;
     padding: 5px;
     font-size: 9pt;

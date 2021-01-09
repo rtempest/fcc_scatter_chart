@@ -60,7 +60,7 @@ d3.json(url, function (error, json) {
         .attr('r', 4)
         .attr('cx', (d) => xScale(d['Year']))
         .attr('cy', (d, i) => yScale(timeData[i]))
-        .style('fill', (c) => c.Doping ? '#C14953' : '#4C4C47')
+        .style('fill', (c) => c.Doping ? '#EF476F' : '#26547C')
 
 
     // add the x axis
@@ -97,10 +97,10 @@ d3.json(url, function (error, json) {
     // add legend
     // var legend = d3.select('body')
 
-    const legendTop = h - (h / 3 * 2)
-    const legendSide = w - pX * 3
-    const legendWidth = 100;
-    const legendHeight = 60;
+    const legendTop = h - h + 100
+    const legendSide = w - pX * 3.5
+    const legendWidth = 210;
+    const legendHeight = 50;
 
     svg.append('rect')
         .attr('id', 'legend')
@@ -116,27 +116,29 @@ d3.json(url, function (error, json) {
     svg.append('circle')
         .attr('r', 4)
         .attr('cx', legendSide + 10)
-        .attr('cy', legendTop + 20)
-        .style('fill', '#C14953')
+        .attr('cy', legendTop + 15)
+        .style('fill', '#EF476F')
 
     // legend doping label
     svg.append('text')
         .attr('x', legendSide + 25)
-        .attr('y', legendTop + 25)
-        .text('doping')
+        .attr('y', legendTop + 20)
+        .style('font-size', '9pt')
+        .text('Riders with doping allegations')
 
     // legend non-doping circle
     svg.append('circle')
         .attr('r', 4)
         .attr('cx', legendSide + 10)
-        .attr('cy', legendTop + 40)
-        .style('fill', '#4C4C47')
+        .attr('cy', legendTop + 35)
+        .style('fill', '#26547C')
 
     // legend non-doping label
     svg.append('text')
         .attr('x', legendSide + 25)
-        .attr('y', legendTop + 45)
-        .text('non-doping')
+        .attr('y', legendTop + 40)
+        .style('font-size', '9pt')
+        .text('Riders without doping allegations')
 
     // create tooltip
     const tooltip = d3.select('body')
@@ -149,15 +151,20 @@ d3.json(url, function (error, json) {
             place = event['Place']
             thisCircle = json.filter((x) => x['Place'] === place)[0]
             const { Name, Doping, Time, Nationality } = thisCircle
-            const dopingStr = () => Doping ? `<li><strong>Doping Allegations:</strong> ${Doping}</li>` : '';
-            d3.select('#tooltip')
-                .style('visibility', 'visible')
-                .style('top', '500px')
+            const dopingStr = () => Doping ? `<li></strong> ${Doping}</li>` : '';
+            tooltip
+                // .style('opacity', 1)
+                .style('top', d3.event.pageY + 'px')
+                .style('left', d3.event.pageX + 10 + 'px')
                 .html(`<li><strong>Cyclist:</strong> ${Name}</li><li><strong>Time:</strong> ${Time}</li><li><strong>Country:</strong> ${Nationality}</li>${dopingStr()}`)
+            tooltip.transition()
+                .duration(200)
+                .style('opacity', 1)
         })
         .on('mouseout', (event) => {
-            d3.select('#tooltip')
-                .style('visibility', 'hidden')
+            tooltip
+                .transition().duration(600)
+                .style('opacity', 0)
         });
 
 
